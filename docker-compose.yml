@@ -1,0 +1,52 @@
+services:
+  db:
+    container_name: db
+    # ports:
+    #   - "3306:3306/tcp"
+    image: mysql
+    restart: always
+    networks: 
+      - budget-vlan
+    volumes:
+      - /home/chromium/budget/etc-conf.d:/etc/mysql/conf.d
+      - /var/lib/budget/db/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_DATABASE: "budget"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "password"
+  backend:
+    container_name: backend
+    image: windingtherope/budget-backend
+    restart: always
+    networks: 
+      - budget-vlan
+    # ports:
+    #   - "3030:80"
+    environment:
+      DB: "budget"
+      DBUSER: "user"
+      DBPASS: "password"
+      DBADDR: db:3306
+    depends_on:
+      - db
+  frontend:
+    container_name: frontend
+    image: windingtherope/budget-frontend
+    restart: always
+    # ports:
+    #   - "3000:80"
+    environment:
+      VITE_BUDGET_API_URL: "http://localhost:3000"
+  budget-proxy:
+    image: nginx
+    restart: always
+    networks:
+      - budget-vlan
+    ports:
+      - "8080:80"
+    volumes:
+      - ./etc-nginx-conf.d:/etc/nginx/conf.d/
+networks:
+  budget-vlan:
+    driver: bridge

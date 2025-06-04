@@ -43,6 +43,9 @@ services:
       - "8080:80"
     volumes:
       - ./etc-nginx-conf.d:/etc/nginx/conf.d/
+    depends_on:
+      - frontend
+      - backend
 networks:
   budget-vlan:
     driver: bridge

@@ -25,6 +25,7 @@ services:
       DBPASS: "password"
       DBADDR: "db:3306"
       GIN_MODE: debug
+      WEBIP: backend
     depends_on:
       - db
   frontend:

@@ -23,7 +23,8 @@ services:
       DB: "budget"
       DBUSER: "user"
       DBPASS: "password"
-      DBADDR: db:3306
+      DBADDR: "db:3306"
+      GIN_MODE: debug
     depends_on:
       - db
   frontend:
@@ -34,6 +35,8 @@ services:
     restart: always
     environment:
       VITE_BUDGET_API_URL: "http://localhost:3000"
+    depends_on:
+      - backend
   budget-proxy:
     image: nginx
     restart: always

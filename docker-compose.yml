@@ -24,7 +24,6 @@ services:
       DBUSER: "user"
       DBPASS: "password"
       DBADDR: db:3306
-      WEBPORT: 3419
     depends_on:
       - db
   frontend:

@@ -16,9 +16,9 @@ services:
   backend:
     container_name: backend
     image: windingtherope/budget-backend
-    restart: always
     networks: 
       - budget-vlan
+    restart: always
     environment:
       DB: "budget"
       DBUSER: "user"

@@ -34,8 +34,6 @@ services:
     networks:
       - budget-vlan
     restart: always
-    environment:
-      VITE_BUDGET_API_URL: "http://localhost:3000"
     depends_on:
       - backend
   budget-proxy:

@@ -9,14 +9,10 @@ services:
       - /home/chromium/budget/etc-conf.d:/etc/mysql/conf.d
       - /var/lib/budget/db/data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: password
-
-      MYSQL_DATABASE: budget
-
-      MYSQL_USER: user
-
-      MYSQL_PASSWORD: password
-
+      MYSQL_ROOT_PASSWORD: ${DBPASS}
+      MYSQL_DATABASE: ${DB}
+      MYSQL_USER: ${DBUSER}
+      MYSQL_PASSWORD: ${DBPASS}
   backend:
     container_name: backend
     image: windingtherope/budget-backend
@@ -24,12 +20,9 @@ services:
       - budget-vlan
     restart: always
     environment:
-      DB: budget
-
-      DBUSER: user
-
-      DBPASS: password
-
+      DB: ${DB}
+      DBUSER: ${DBUSER}
+      DBPASS: ${DBPASS}
       DBADDR: "db:3306"
       WEBIP: backend
     depends_on:
